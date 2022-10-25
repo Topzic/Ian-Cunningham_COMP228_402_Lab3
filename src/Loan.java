@@ -1,10 +1,11 @@
 public class Loan {
 
-    String borrowerName;
-    int loanTerm;
-    double loanAmount;
-    double interestRate;
-    LoanType loanType;
+    /** Declared as private to follow guidelines of Encapsulation */
+    private String borrowerName;
+    private int loanTerm;
+    private double loanAmount;
+    private double interestRate;
+    private LoanType loanType;
 
     //region Setters & Getters
     public String getBorrowerName() {
@@ -48,6 +49,7 @@ public class Loan {
     }
 //endregion
 
+    /** Default Constructor */
     public Loan() {
         this.borrowerName = borrowerName;
         this.loanTerm = loanTerm;
@@ -56,12 +58,35 @@ public class Loan {
         this.loanType = loanType;
     }
 
+    /** Constructor for user input */
     public Loan(String name, int term, double amount, double interest, LoanType type) {
         borrowerName = name;
         term = loanTerm;
         amount = loanAmount;
         interest = interestRate;
         type = loanType;
+    }
+
+    /** Calculates monthly payments for user */
+    public double monthlyInstallments(double loanAmount, double interestRate, int loanTerm) {
+        double installment = (loanAmount + ((interestRate / 100) * loanAmount)) / (loanTerm * 12);
+        return installment;
+    }
+
+    /** Prints loan details & Monthly installments */
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "borrowerName='" + borrowerName + '\'' +
+                ", loanTerm=" + loanTerm +
+                ", loanAmount=" + loanAmount +
+                ", interestRate=" + interestRate +
+                ", loanType=" + loanType +
+                '}';
+    }
+
+    public String adminFees() {
+        return "";
     }
 
 }

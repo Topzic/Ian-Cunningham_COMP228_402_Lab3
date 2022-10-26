@@ -51,11 +51,11 @@ public class Loan {
 
     /** Default Constructor */
     public Loan() {
-        this.borrowerName = borrowerName;
-        this.loanTerm = loanTerm;
-        this.loanAmount = loanAmount;
-        this.interestRate = interestRate;
-        this.loanType = loanType;
+        this.borrowerName = "";
+        this.loanTerm = 0;
+        this.loanAmount = 0;
+        this.interestRate = 0.0;
+        this.loanType = LoanType.Accommodation;
     }
 
     /** Constructor for user input */
@@ -82,11 +82,18 @@ public class Loan {
                 ", loanAmount=" + loanAmount +
                 ", interestRate=" + interestRate +
                 ", loanType=" + loanType +
-                '}';
+                "$" + monthlyInstallments(loanAmount, interestRate, loanTerm);
     }
 
-    public String adminFees() {
-        return "";
+    public String administrationFees() {
+        if (loanType == LoanType.Tuition) {
+            return "Administration Fee for loan type Tuition is $250.";
+        } else if (loanType == LoanType.Computer) {
+            return "Administration Fee for loan type Computer is $30.";
+        } else if (loanType == LoanType.Accommodation) {
+            return "Administration Fee for loan type Accommodation is $50.";
+        }
+        return "You do not have a loan type.";
     }
 
 }

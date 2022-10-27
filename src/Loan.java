@@ -5,7 +5,7 @@ public class Loan {
     private int loanTerm;
     private double loanAmount;
     private double interestRate;
-    private LoanType loanType;
+    private static LoanType loanType;
 
     //region Setters & Getters
     public String getBorrowerName() {
@@ -67,6 +67,20 @@ public class Loan {
         type = loanType;
     }
 
+    public static LoanType selectLoan(int userInput) {
+        if (userInput == 1) {
+            loanType = LoanType.Computer;
+            return loanType;
+        } else if (userInput == 2) {
+            loanType = LoanType.Accommodation;
+            return loanType;
+        } else if (userInput == 3) {
+            loanType = LoanType.Tuition;
+            return loanType;
+        }
+        return null;
+    }
+
     /** Calculates monthly payments for user */
     public double monthlyInstallments(double loanAmount, double interestRate, int loanTerm) {
         double installment = (loanAmount + ((interestRate / 100) * loanAmount)) / (loanTerm * 12);
@@ -86,12 +100,13 @@ public class Loan {
     }
 
     public String administrationFees() {
+        double adminFee = getLoanAmount() * getInterestRate() / 100;
         if (loanType == LoanType.Tuition) {
-            return "Administration Fee for loan type Tuition is $250.";
+            return "Administration Fee for loan type Tuition is $" + adminFee;
         } else if (loanType == LoanType.Computer) {
-            return "Administration Fee for loan type Computer is $30.";
+            return "Administration Fee for loan type Computer is $0.";
         } else if (loanType == LoanType.Accommodation) {
-            return "Administration Fee for loan type Accommodation is $50.";
+            return "Administration Fee for loan type Accommodation is $65.";
         }
         return "You do not have a loan type.";
     }

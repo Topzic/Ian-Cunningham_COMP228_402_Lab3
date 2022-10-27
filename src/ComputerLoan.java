@@ -3,9 +3,9 @@ import java.util.Arrays;
 
 public class ComputerLoan extends Loan {
 
-    private int maxAmount = 1000;
+    private static int maxAmount = 1000;
     private double fixedRate = 0;
-    ArrayList<Integer> termOptions = new ArrayList<Integer>(Arrays.asList(1, 2));
+    private static ArrayList<Integer> termOptions = new ArrayList<Integer>(Arrays.asList(1, 2));
 
     public ComputerLoan (String name, int term, double amount, LoanType loanType) {
         super.setBorrowerName(name);
@@ -15,21 +15,11 @@ public class ComputerLoan extends Loan {
         super.setLoanType(loanType);
     }
 
-    @Override
-    public void setLoanAmount(double loanAmount) {
-        if (loanAmount > maxAmount) {
-            System.out.println("Maximum loan amount is $1000");
-            return;
+    public static boolean loanRequirements(double amount, int term) {
+        if (amount < maxAmount && termOptions.contains(term)) {
+            return true;
         }
-        super.setLoanAmount(loanAmount);
-    }
-
-    @Override
-    public void setLoanTerm(int loanTerm) {
-        if (!termOptions.contains(loanTerm)) {
-            System.out.println("The loan term for computer is between 1-2 years.");
-            return;
-        }
-        super.setLoanTerm(loanTerm);
+        System.out.println("Computer loan does not meet requirements.");
+        return false;
     }
 }

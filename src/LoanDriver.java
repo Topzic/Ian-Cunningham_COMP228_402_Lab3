@@ -23,11 +23,15 @@ public class LoanDriver {
 
             /** Brings loan object into scope */
             Loan loan = null;
+            LoanType type;
 
-            /** User selects loan type */
-            System.out.println("1 = Computer Loan | 2 = Accommodation Loan | 3 = Tuition Loan");
-            System.out.print("Please select one of the following: ");
-            LoanType type = Loan.selectLoan(input.nextInt());
+            /** User selects loan type
+             * Checks user only enters a valid entry */
+            do {
+                System.out.println("1 = Computer Loan | 2 = Accommodation Loan | 3 = Tuition Loan");
+                System.out.print("Please select one of the following: ");
+                type = Loan.selectLoan(input.nextInt());
+            } while (type != LoanType.Computer && type != LoanType.Accommodation && type != LoanType.Tuition);
             input.nextLine();
 
              /** User enters name */
@@ -43,19 +47,22 @@ public class LoanDriver {
             int amount = input.nextInt();
 
             if (type == LoanType.Computer) {
-                loan = new ComputerLoan(name, term, amount, LoanType.Computer);
-                loans.add(loan);
+                if (ComputerLoan.loanRequirements(amount, term)) {
+                    loan = new ComputerLoan(name, term, amount, LoanType.Computer);
+                    loans.add(loan);
+                }
             } else if (type == LoanType.Accommodation) {
-                loan = new AccommodationLoan(name, term, amount, LoanType.Accommodation);
-                loans.add(loan);
+                if (AccommodationLoan.loanRequirements(amount, term)) {
+                    loan = new AccommodationLoan(name, term, amount, LoanType.Accommodation);
+                    loans.add(loan);
+                }
             } else if (type == LoanType.Tuition) {
-                loan = new TuitionLoan(name, term, amount, LoanType.Tuition);
-                loans.add(loan);
-            } else if (loan == null){
-                System.out.println("Loan type not found..");
-                continue;
+                if (TuitionLoan.loanRequirements(amount, term)) {
+                    loan = new TuitionLoan(name, term, amount, LoanType.Tuition);
+                    loans.add(loan);
+                }
             } else {
-            System.out.println("Loan type not found..");
+            System.out.println("Loan type not found, please try again.");
         }
 
         } while (loans.size() != 3);

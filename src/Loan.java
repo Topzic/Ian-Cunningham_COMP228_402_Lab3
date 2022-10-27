@@ -5,7 +5,7 @@ public class Loan {
     private int loanTerm;
     private double loanAmount;
     private double interestRate;
-    private static LoanType loanType;
+    private LoanType loanType;
 
     //region Setters & Getters
     public String getBorrowerName() {
@@ -67,18 +67,17 @@ public class Loan {
         type = loanType;
     }
 
+    /** */
     public static LoanType selectLoan(int userInput) {
+        LoanType type = null;
         if (userInput == 1) {
-            loanType = LoanType.Computer;
-            return loanType;
+            type = LoanType.Computer;
         } else if (userInput == 2) {
-            loanType = LoanType.Accommodation;
-            return loanType;
+            type = LoanType.Accommodation;
         } else if (userInput == 3) {
-            loanType = LoanType.Tuition;
-            return loanType;
+            type = LoanType.Tuition;
         }
-        return null;
+        return type;
     }
 
     /** Calculates monthly payments for user */
@@ -91,12 +90,12 @@ public class Loan {
     @Override
     public String toString() {
         return "Loan{" +
-                "borrowerName='" + borrowerName + '\'' +
-                ", loanTerm=" + loanTerm +
-                ", loanAmount=" + loanAmount +
-                ", interestRate=" + interestRate +
-                ", loanType=" + loanType +
-                "$" + monthlyInstallments(loanAmount, interestRate, loanTerm);
+                "borrowerName='" + this.borrowerName + '\'' +
+                ", loanTerm=" + this.loanTerm +
+                ", loanAmount=" + this.loanAmount +
+                ", interestRate=" + this.interestRate +
+                ", loanType=" + this.loanType +
+                "$" + monthlyInstallments(this.loanAmount, this.interestRate, this.loanTerm);
     }
 
     public String administrationFees() {

@@ -1,17 +1,19 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Only create objects and store them if the Loan is approved using the validation table.
- * Your loop needs to keep going till 3 Loan Objects are created and stored in the array.
- * Upcasting is covered in Week 5 Lecture under Polymorphism with the example, use the same logic here based on conditions.
+ * Author: Ian Cunningham
+ * Date: 10/27/2022
+ * File: LoanDriver.java
  */
 
 public class LoanDriver {
 
     public static void main(String[] args) {
+
+        /** How many loan accounts would you like to create? */
+        int iterations = 3;
 
         Scanner input = new Scanner(System.in);
         ArrayList<Loan> loans = new ArrayList<Loan>();
@@ -23,14 +25,19 @@ public class LoanDriver {
 
             /** Brings loan object into scope */
             Loan loan = null;
-            LoanType type;
+            LoanType type = null;
 
             /** User selects loan type
              * Checks user only enters a valid entry */
             do {
                 System.out.println("1 = Computer Loan | 2 = Accommodation Loan | 3 = Tuition Loan");
                 System.out.print("Please select one of the following: ");
-                type = Loan.selectLoan(input.nextInt());
+                try {
+                    type = Loan.selectLoan(input.nextInt());
+                } catch (InputMismatchException e) {
+                    System.out.println("Please enter one of the following integers.");
+                    input.nextLine();
+                }
             } while (type != LoanType.Computer && type != LoanType.Accommodation && type != LoanType.Tuition);
             input.nextLine();
 
@@ -46,6 +53,10 @@ public class LoanDriver {
             System.out.print("Please enter loan amount: ");
             int amount = input.nextInt();
 
+            /** Nested if block will first check the Loan Type, and then
+             * it will check the requirements for it, if all conditions
+             * are met. The object is upcasted to the correct class
+             * and then the object is added to the array of loan accounts */
             if (type == LoanType.Computer) {
                 if (ComputerLoan.loanRequirements(amount, term)) {
                     loan = new ComputerLoan(name, term, amount, LoanType.Computer);
@@ -65,10 +76,11 @@ public class LoanDriver {
             System.out.println("Loan type not found, please try again.");
         }
 
-        } while (loans.size() != 3);
+        } while (loans.size() != iterations);
 
         /** Prints out array of loans created */
-        loans.forEach(l -> System.out.println(l + "\n" + l.getClass()));
+        System.out.println("-----Printing Loan Account Details-----\n");
+        loans.forEach(l -> System.out.println(l + "\n" + l.administrationFees() + "\n"));
 
     }
 }

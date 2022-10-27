@@ -1,3 +1,10 @@
+/**
+ * Author: Ian Cunningham
+ * Date: 10/27/2022
+ * File: Loan.java
+ * Superclass to: ComputerLoan, AccommodationLoan, Tuition Loan
+ */
+
 public class Loan {
 
     /** Declared as private to follow guidelines of Encapsulation */
@@ -67,7 +74,7 @@ public class Loan {
         type = loanType;
     }
 
-    /** */
+    /** Sets the loan from user input */
     public static LoanType selectLoan(int userInput) {
         LoanType type = null;
         if (userInput == 1) {
@@ -80,28 +87,30 @@ public class Loan {
         return type;
     }
 
-    /** Calculates monthly payments for user */
-    public double monthlyInstallments(double loanAmount, double interestRate, int loanTerm) {
+    /**
+     * Calculates monthly payments for user
+     */
+    public String monthlyInstallments(double loanAmount, double interestRate, int loanTerm) {
         double installment = (loanAmount + ((interestRate / 100) * loanAmount)) / (loanTerm * 12);
-        return installment;
+        return String.format("%.2f", installment);
     }
 
     /** Prints loan details & Monthly installments */
     @Override
     public String toString() {
-        return "Loan{" +
-                "borrowerName='" + this.borrowerName + '\'' +
+        return  "borrowerName='" + this.borrowerName + '\'' +
                 ", loanTerm=" + this.loanTerm +
                 ", loanAmount=" + this.loanAmount +
                 ", interestRate=" + this.interestRate +
                 ", loanType=" + this.loanType +
-                "$" + monthlyInstallments(this.loanAmount, this.interestRate, this.loanTerm);
+                " monthlyInstallments=$" + monthlyInstallments(this.loanAmount, this.interestRate, this.loanTerm);
     }
 
+    /** Logic to calculate administration fees depending on loanType */
     public String administrationFees() {
         double adminFee = getLoanAmount() * getInterestRate() / 100;
         if (loanType == LoanType.Tuition) {
-            return "Administration Fee for loan type Tuition is $" + adminFee;
+            return "Administration Fee for loan type Tuition is $" + String.format("%.2f", adminFee);
         } else if (loanType == LoanType.Computer) {
             return "Administration Fee for loan type Computer is $0.";
         } else if (loanType == LoanType.Accommodation) {

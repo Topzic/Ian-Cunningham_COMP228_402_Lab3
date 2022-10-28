@@ -25,10 +25,10 @@ public class AccommodationLoan extends Loan {
 
     /** Checks if requirements are met from user input */
     public static boolean loanRequirements(double amount, int term) {
-        if (amount < maxAmount && termOptions.contains(term)) {
+        if (amount <= maxAmount && termOptions.contains(term)) {
             return true;
         }
-        System.out.println("Computer loan does not meet requirements.");
+        System.out.println("Accommodation loan does not meet requirements.");
         return false;
     }
 

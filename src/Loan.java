@@ -67,7 +67,7 @@ public class Loan {
 
     /** Constructor for user input */
     public Loan(String name, int term, double amount, double interest, LoanType type) {
-        borrowerName = name;
+        name = borrowerName;
         term = loanTerm;
         amount = loanAmount;
         interest = interestRate;
@@ -90,8 +90,8 @@ public class Loan {
     /**
      * Calculates monthly payments for user
      */
-    public String monthlyInstallments(double loanAmount, double interestRate, int loanTerm) {
-        double installment = (loanAmount + ((interestRate / 100) * loanAmount)) / (loanTerm * 12);
+    public String monthlyInstallments() {
+        double installment = (getLoanAmount() + ((getInterestRate() / 100) * getLoanAmount())) / (getLoanTerm() * 12);
         return String.format("%.2f", installment);
     }
 
@@ -103,7 +103,7 @@ public class Loan {
                 ", loanAmount=" + this.loanAmount +
                 ", interestRate=" + this.interestRate +
                 ", loanType=" + this.loanType +
-                " monthlyInstallments=$" + monthlyInstallments(this.loanAmount, this.interestRate, this.loanTerm);
+                " monthlyInstallments=$" + monthlyInstallments();
     }
 
     /** Logic to calculate administration fees depending on loanType */

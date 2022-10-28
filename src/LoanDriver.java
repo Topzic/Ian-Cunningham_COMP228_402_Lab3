@@ -13,7 +13,7 @@ public class LoanDriver {
     public static void main(String[] args) {
 
         /** How many loan accounts would you like to create? */
-        int iterations = 3;
+        int iterations = 2;
 
         Scanner input = new Scanner(System.in);
         ArrayList<Loan> loans = new ArrayList<Loan>();
@@ -24,7 +24,7 @@ public class LoanDriver {
         do {
 
             /** Brings loan object into scope */
-            Loan loan = null;
+            Loan loan;
             LoanType type = null;
 
             /** User selects loan type
@@ -79,8 +79,8 @@ public class LoanDriver {
         } while (loans.size() != iterations);
 
         /** Prints out array of loans created */
-        System.out.println("-----Printing Loan Account Details-----\n");
-        loans.forEach(l -> System.out.println(l + "\n" + l.administrationFees() + "\n"));
+        System.out.println("\n-----Printing Loan Account Details-----");
+        loans.forEach(l -> System.out.println(l + "\n" + l.administrationFees()));
 
     }
 }

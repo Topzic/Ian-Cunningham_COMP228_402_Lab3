@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,10 +14,11 @@ public class LoanDriver {
     public static void main(String[] args) {
 
         /** How many loan accounts would you like to create? */
-        int iterations = 2;
+        int accountCreationNumber = 3;
+        int iterations = 0;
 
         Scanner input = new Scanner(System.in);
-        ArrayList<Loan> loans = new ArrayList<Loan>();
+        Loan[] loans = new Loan[accountCreationNumber];
 
         System.out.println("Welcome to Centennial Banking Loan Portal");
         System.out.println("Which loan would you like to select?");
@@ -59,28 +61,27 @@ public class LoanDriver {
              * and then the object is added to the array of loan accounts */
             if (type == LoanType.Computer) {
                 if (ComputerLoan.loanRequirements(amount, term)) {
-                    loan = new ComputerLoan(name, term, amount, LoanType.Computer);
-                    loans.add(loan);
+                    loans[iterations] = new ComputerLoan(name, term, amount, LoanType.Computer);
                 }
             } else if (type == LoanType.Accommodation) {
                 if (AccommodationLoan.loanRequirements(amount, term)) {
-                    loan = new AccommodationLoan(name, term, amount, LoanType.Accommodation);
-                    loans.add(loan);
+                    loans[iterations] = new AccommodationLoan(name, term, amount, LoanType.Accommodation);
                 }
             } else if (type == LoanType.Tuition) {
                 if (TuitionLoan.loanRequirements(amount, term)) {
-                    loan = new TuitionLoan(name, term, amount, LoanType.Tuition);
-                    loans.add(loan);
+                    loans[iterations] = new TuitionLoan(name, term, amount, LoanType.Tuition);
                 }
             } else {
             System.out.println("Loan type not found, please try again.");
+            return;
         }
-
-        } while (loans.size() != iterations);
+            iterations++;
+        } while (iterations != accountCreationNumber);
 
         /** Prints out array of loans created */
         System.out.println("\n-----Printing Loan Account Details-----");
-        loans.forEach(l -> System.out.println(l + "\n" + l.administrationFees()));
-
+        for (Loan loan : loans) {
+            System.out.println(loan + "\n" + loan.administrationFees());
+        }
     }
 }
